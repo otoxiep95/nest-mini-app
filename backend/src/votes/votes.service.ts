@@ -11,10 +11,8 @@ export class VotesService {
     private readonly votesRepository: Repository<Vote>,
   ) {}
 
-  create(CreateVoteDto: CreateVoteDto): Promise<Vote> {
-    const vote = new Vote();
-    vote.vote = CreateVoteDto.vote;
-
+  create(newVote: CreateVoteDto): Promise<Vote> {
+    const vote = new Vote(newVote.vote);
     return this.votesRepository.save(vote);
   }
 

@@ -4,7 +4,12 @@ module.exports = {
     project: 'tsconfig.json',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin'],
+  plugins: [
+    '@typescript-eslint/eslint-plugin',
+    '@typescript-eslint',
+    '@typescript-eslint/tslint',
+    'import',
+  ],
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',

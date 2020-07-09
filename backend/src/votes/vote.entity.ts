@@ -7,4 +7,8 @@ export class Vote {
 
   @Column()
   vote: string;
+
+  constructor(vote: string) {
+    this.vote = vote;
+  }
 }

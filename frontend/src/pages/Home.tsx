@@ -1,13 +1,27 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-export default function Results() {
+const Home = () => {
   const history = useHistory();
 
-  function postVote(vote: string) {
-    console.log(vote);
-    history.push("/results");
-  }
+  const postVote = (text: string): void => {
+    //console.log(vote);
+    fetch("http://localhost:9090/votes", {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        vote: text,
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        history.push("/results");
+      }
+    });
+  };
 
   return (
     <div>
@@ -26,4 +40,6 @@ export default function Results() {
       </button>
     </div>
   );
-}
+};
+
+export default Home;

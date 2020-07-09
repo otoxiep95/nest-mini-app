@@ -8,8 +8,8 @@ export class VotesController {
   constructor(private readonly votesService: VotesService) {}
 
   @Post()
-  create(@Body() CreateVoteDto: CreateVoteDto): Promise<Vote> {
-    return this.votesService.create(CreateVoteDto);
+  create(@Body() newVote: CreateVoteDto): Promise<Vote> {
+    return this.votesService.create(newVote);
   }
 
   @Get()
