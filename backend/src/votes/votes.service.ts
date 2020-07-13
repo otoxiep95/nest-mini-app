@@ -20,11 +20,7 @@ export class VotesService {
     return this.votesRepository.find();
   }
 
-  //   findOne(id: string): Promise<Vote> {
-  //     return this.usersRepository.findOne(id);
-  //   }
-
-  //   async remove(id: string): Promise<void> {
-  //     await this.usersRepository.delete(id);
-  //   }
+  async remove(id: number): Promise<void> {
+    await this.votesRepository.delete(id);
+  }
 }

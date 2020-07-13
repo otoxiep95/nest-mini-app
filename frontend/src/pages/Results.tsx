@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-
+//import VoteCard from "./../components/VoteCard";
 const Results = () => {
-  const [goodVotes, setGoodVotes] = useState([]);
-  const [fairVotes, setFairVotes] = useState([]);
-  const [neutralVotes, setNeutralVotes] = useState([]);
-  const [badVotes, setBadVotes] = useState([]);
-  const [totalVotes, setTotalVotes] = useState([]);
+  interface Vote {
+    vote: string;
+  }
+  const [goodVotes, setGoodVotes]: Array<any> = useState([]);
+  const [fairVotes, setFairVotes]: Array<any> = useState([]);
+  const [neutralVotes, setNeutralVotes]: Array<any> = useState([]);
+  const [badVotes, setBadVotes]: Array<any> = useState([]);
+  const [totalVotes, setTotalVotes]: Array<any> = useState([]);
 
   function getResults() {
     fetch("http://localhost:9090/votes", {
@@ -30,24 +33,30 @@ const Results = () => {
   /***
    * Fix types
    */
-  // function separateVotes(data: any) {
-  //   data.forEach((dataVote: object) => {
-  //     const text: string = dataVote.vote;
-  //     switch (text) {
-  //       case "Good":
-  //         setGoodVotes((votes) => votes.concat(goodVotes));
-  //         break;
-  //       case "Fair":
-  //         break;
-  //       case "Neutral":
-  //         break;
-  //       case "Bad":
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   });
-  // }
+  function separateVotes(data: Array<Vote>) {
+    data.forEach((dataVote: Vote) => {
+      console.log(dataVote);
+      const text: string = dataVote.vote;
+      const newVote: Vote = dataVote;
+      switch (text) {
+        case "Good":
+          setGoodVotes((votes: Array<Vote>) => votes.concat(newVote));
+          break;
+        case "Fair":
+          setFairVotes((votes: Array<Vote>) => votes.concat(newVote));
+          break;
+        case "Neutral":
+          setNeutralVotes((votes: Array<Vote>) => votes.concat(newVote));
+          break;
+        case "Bad":
+          setBadVotes((votes: Array<Vote>) => votes.concat(newVote));
+          break;
+        default:
+          break;
+      }
+    });
+    console.log(goodVotes);
+  }
 
   useEffect(() => {
     getResults();
@@ -56,10 +65,37 @@ const Results = () => {
   return (
     <div>
       <h2>Results</h2>
-      <div>Good</div>
-      <div>Fair</div>
-      <div>Neutral</div>
-      <div>Bad</div>
+      <div>
+        <h3>Good</h3>
+        <p>Number of votes: {goodVotes.length}</p>
+        <p>
+          Percentage: {Math.round((goodVotes.length / totalVotes.length) * 100)}
+          %
+        </p>
+      </div>
+      <div>
+        <h3>Fair</h3>
+        <p>Number of votes: {fairVotes.length}</p>
+        <p>
+          Percentage: {Math.round((fairVotes.length / totalVotes.length) * 100)}
+          %
+        </p>
+      </div>
+      <div>
+        <h3>Neutral</h3>
+        <p>Number of votes: {neutralVotes.length}</p>
+        <p>
+          Percentage:{" "}
+          {Math.round((neutralVotes.length / totalVotes.length) * 100)}%
+        </p>
+      </div>
+      <div>
+        <h3>Bad</h3>
+        <p>Number of votes: {badVotes.length}</p>
+        <p>
+          Percentage: {Math.round((badVotes.length / totalVotes.length) * 100)}%
+        </p>
+      </div>
     </div>
   );
 };
